@@ -29,14 +29,8 @@ class Game:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					self.keep_looping = False
-				elif event.key == pygame.K_w:
-					self.player.cur_y -= 1
-				elif event.key == pygame.K_a:
-					self.player.cur_x -= 1
-				elif event.key == pygame.K_s:
-					self.player.cur_y += 1
-				elif event.key == pygame.K_d:
-					self.player.cur_x += 1
+				else:
+					self.player.move(event, self.cells)
 			
 
 	def update(self):
@@ -46,4 +40,5 @@ class Game:
 		self.surface.fill(self.BG_COLOR)
 		self.cells.draw()
 		self.player.draw()
+		self.surface.fill(con.BLUE, pygame.Rect(17 * con.TILESIZE, 4 * con.TILESIZE, con.TILESIZE, con.TILESIZE))
 		pygame.display.update()

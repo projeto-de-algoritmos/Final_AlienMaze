@@ -11,9 +11,11 @@ class Cells:
         self._load_data()
 
     def _load_data(self):
-        xlsx = ExcelFile("map.xlsx")
+        xlsx = ExcelFile("./src/map.xlsx")
         global cells
         cells = xlsx.parse(xlsx.sheet_names[0]).to_dict()
+        # for c in cells:
+        #     print(cells[c])
 
         x, y, id = 0, 0, 0
         self.inner = []
@@ -32,6 +34,10 @@ class Cells:
         for elem in self.inner:
             self.screen.fill(elem.color, elem.rect)
             # pygame.draw.rect(self.screen, con.BLACK, elem.rect, 1) # Malha Quadriculada
+
+    def getCell(self, x, y):
+        id = (((x) * (con.TILES_VERTICAL)) + (y % con.TILES_VERTICAL))
+        return self.inner[id]
 
 class Cell:
     def __init__(self, id, x, y, type):
