@@ -29,7 +29,10 @@ class Game:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					self.keep_looping = False
+				if event.key == pygame.K_RETURN:
+					self.cells.matrix[16][14].setType('p')
 				else:
+					# self.cells.printMap()
 					self.player.move(event, self.cells)
 			
 
@@ -40,5 +43,6 @@ class Game:
 		self.surface.fill(self.BG_COLOR)
 		self.cells.draw()
 		self.player.draw()
-		self.surface.fill(con.BLUE, pygame.Rect(17 * con.TILESIZE, 4 * con.TILESIZE, con.TILESIZE, con.TILESIZE))
+		# pygame.draw.rect(self.surface, con.PURPLE, self.cells.matrix[16][14])
+		# self.surface.fill(con.BLUE, pygame.Rect(17 * con.TILESIZE, 4 * con.TILESIZE, con.TILESIZE, con.TILESIZE))
 		pygame.display.update()
