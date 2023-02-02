@@ -3,6 +3,7 @@ import pygame
 import constants as con
 import os
 from map import *
+from player import Player
 
 class Game:
 	def __init__(self):
@@ -13,12 +14,13 @@ class Game:
 		self.BG_COLOR = con.BLACK
 		self.keep_looping = True
 		self.cells = Cells(self.surface)
+		self.player = Player(self.surface)
 
 	def main(self):
 		while self.keep_looping:
+			self.draw()
 			self.events()
 			self.update()
-			self.draw()
 
 	def events(self):
 		for event in pygame.event.get():
@@ -27,6 +29,15 @@ class Game:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					self.keep_looping = False
+				elif event.key == pygame.K_w:
+					self.player.cur_y -= 1
+				elif event.key == pygame.K_a:
+					self.player.cur_x -= 1
+				elif event.key == pygame.K_s:
+					self.player.cur_y += 1
+				elif event.key == pygame.K_d:
+					self.player.cur_x += 1
+			
 
 	def update(self):
 		pass
@@ -34,4 +45,5 @@ class Game:
 	def draw(self):
 		self.surface.fill(self.BG_COLOR)
 		self.cells.draw()
+		self.player.draw()
 		pygame.display.update()

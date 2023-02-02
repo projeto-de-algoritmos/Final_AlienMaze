@@ -31,6 +31,7 @@ class Cells:
             raise ValueError("No cells to display.")
         for elem in self.inner:
             self.screen.fill(elem.color, elem.rect)
+            # pygame.draw.rect(self.screen, con.BLACK, elem.rect, 1) # Malha Quadriculada
 
 class Cell:
     def __init__(self, id, x, y, type):
