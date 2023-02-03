@@ -1,5 +1,6 @@
 from heapq import *
 import constants as con
+import math
 
 def manhattanDistance(a, b):
 	# Distância de Manhattan para o A*
@@ -66,3 +67,63 @@ def aStar(start, end, cells):
 
 	answer = list(reversed(reverseAnswer))
 	return answer
+
+def dist(p1, p2):
+    return math.sqrt(((p2[1]-p1[1])**2)+((p2[0]-p1[0])**2))
+
+
+def closest_brute_force(points):
+    min_dist = float("inf")
+    p1 = None
+    p2 = None
+    for i in range(len(points)):
+        for j in range(i+1, len(points)):
+            d = dist(points[i], points[j])
+            if d < min_dist:
+                min_dist = d
+                p1 = points[i]
+                p2 = points[j]
+    return p1, p2, min_dist
+
+
+def rec(xsorted, ysorted):
+    n = len(xsorted)
+    # Usar força bruta, pois são poucos pontos
+    if n <= 3:
+        return closest_brute_force(xsorted)
+    else:
+        # Encontrar o ponto médio
+        midpoint = xsorted[n//2]
+        # Dividir pontos eixo x
+        xsorted_left = xsorted[:n//2]
+        xsorted_right = xsorted[n//2:]
+        ysorted_left = []
+        ysorted_right = []
+        # Dividir eixo y comparando pelo ponto médio achado
+        for point in ysorted:
+            ysorted_left.append(point) if (
+                point[0] <= midpoint[0]) else ysorted_right.append(point)
+		# Encontrar os par mais próximo na parte esquerda(delta-left)
+        (p1_left, p2_left, delta_left) = rec(xsorted_left, ysorted_left)
+		# Encontrar os par mais próximo na parte direita(delta-right)
+        (p1_right, p2_right, delta_right) = rec(xsorted_right, ysorted_right)
+		# Encontrar a menor distância possível entre pontos no plano dividido(delta)
+        (p1, p2, delta) = (p1_left, p2_left, delta_left) if (delta_left < delta_right) else (p1_right, p2_right, delta_right)
+        # Encontrar pontos que podem estar em diferentes planos, na faixa da menor distância
+        in_band = [point for point in ysorted if midpoint[0] -
+                   delta < point[0] < midpoint[0]+delta]
+		# Para cada ponto encontrado na faixa, substituir se a distância for menor do que delta
+        for i in range(len(in_band)):
+            for j in range(i+1, min(i+7, len(in_band))):
+                d = dist(in_band[i], in_band[j])
+                if d < delta:
+                    print(in_band[i], in_band[j])
+                    (p1, p2, delta) = (in_band[i], in_band[j], d)
+        return p1, p2, delta
+
+
+def closest(points):
+    # Ordenar para facilitar na hora de achar o ponto médio
+    xsorted = sorted(points, key=lambda point: point[0])
+    ysorted = sorted(points, key=lambda point: point[1])
+    return rec(xsorted, ysorted)
