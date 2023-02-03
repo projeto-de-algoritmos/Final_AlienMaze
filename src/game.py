@@ -5,8 +5,7 @@ import os
 from map import *
 from player import Player
 from enemy import Enemy
-from algorithms import aStar
-
+from coin import Coins
 
 class Game:
     def __init__(self):
@@ -20,6 +19,7 @@ class Game:
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
         self.enemy = Enemy(16, 14, self.surface, self.cells, self.player)
+        self.coins = Coins(self.surface, self.cells, self.player, self.enemy)
         self.gameover = False
 
     def main(self):
@@ -61,27 +61,13 @@ class Game:
             self.cells.draw()
             self.player.draw()
             self.enemy.draw()
+            self.coins.draw()
 
         # Testando limites
         pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[0][0])
         pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[19][19])
 
-        # self.surface.fill(con.BLUE, pygame.Rect(17 * con.TILESIZE, 4 * con.TILESIZE, con.TILESIZE, con.TILESIZE))
         pygame.display.update()
-
-    # def game_over_screen():
-    # 	bg2 = pygame.image.load('images/gameover.png').convert_alpha()
-    # 	bg2 = pygame.transform.scale(bg2, (1300, 800))
-    # 	screen.blit(bg2, (0, 0))
-    # 	pygame.display.flip()
-    # 	waiting = True
-    # 	while waiting:
-    # 		for event in pygame.event.get():
-    # 			if event.type == pygame.QUIT:
-    # 				pygame.quit()
-    # 			key = pygame.key.get_pressed()
-    # 			if key[pygame.K_r]:
-    # 				waiting = False
 
     def gameOver(self):
         if (self.enemy.x == self.player.cur_x and self.enemy.y == self.player.cur_y):

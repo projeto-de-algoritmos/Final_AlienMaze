@@ -78,6 +78,7 @@ class Cell:
         self.x = int(x)
         self.y = int(y)
         self.type = type
+        self.items = []
 
         global img, wei
         img = {
