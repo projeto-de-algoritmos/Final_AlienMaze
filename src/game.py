@@ -38,7 +38,6 @@ class Game:
 					# self.cells.printMap()
 					self.player.move(event, self.cells)
 			
-
 	def update(self):
 		if (pygame.time.get_ticks() % 300) == 0:
 			self.enemy.moveTowardsPlayer('astar')

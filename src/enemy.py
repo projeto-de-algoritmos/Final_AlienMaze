@@ -14,6 +14,10 @@ class Enemy:
 	def draw(self):
 		# Ponto para testar o A*
 		pygame.draw.rect(self.surface, con.PURPLE, self.cells.matrix[self.x][self.y])
+		path = list(reversed(self.aStarDistance(self.cur_pos)))
+		if len(path) > 1:
+			for cell in path:
+				pygame.draw.circle(self.surface, con.ORANGE, cell.rect.center, 5)
 	
 	def moveTowardsPlayer(self, algorithmType):
 		if algorithmType == 'astar':
