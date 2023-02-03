@@ -41,9 +41,12 @@ class Game:
                     self.keep_looping = False
                 if event.key == pygame.K_RETURN:
                     self.cells.matrix[16][14].setType('p')
+                if event.key == pygame.K_f:
+                    self.cells.stroke = not self.cells.stroke
                 else:
                     # self.cells.printMap()
                     self.player.move(event, self.cells)
+           
 
     def update(self):
 
