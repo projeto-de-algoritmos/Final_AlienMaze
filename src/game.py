@@ -54,6 +54,8 @@ class Game:
         if (pygame.time.get_ticks() % 300) == 0:
             self.enemy.moveTowardsPlayer('astar')
         self.gameOver()
+        self.player.getItem()
+        self.coins.removePickedCoins()
 
     def draw(self):
         if (self.gameover == False):

@@ -29,6 +29,11 @@ class Coins:
 		for coin in self.inner:
 			pygame.draw.circle(self.surface, con.DARK_RED, coin.cell.rect.center, 8)
 
+	def removePickedCoins(self):
+		for coin in self.inner:
+			if coin.cell == None:
+				self.inner.remove(coin)
+
 
 class Coin:
 	def __init__(self, x, y, cell):
