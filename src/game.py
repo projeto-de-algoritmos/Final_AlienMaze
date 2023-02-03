@@ -41,12 +41,13 @@ class Game:
                     self.keep_looping = False
                 if event.key == pygame.K_RETURN:
                     self.cells.matrix[16][14].setType('p')
-                if event.key == pygame.K_f:
+                if event.key == pygame.K_m:
                     self.cells.stroke = not self.cells.stroke
+                if event.key == pygame.K_c:
+                    self.enemy.showPath = not self.enemy.showPath
                 else:
                     # self.cells.printMap()
                     self.player.move(event, self.cells)
-           
 
     def update(self):
 
@@ -85,7 +86,6 @@ class Game:
     def gameOver(self):
         if (self.enemy.x == self.player.cur_x and self.enemy.y == self.player.cur_y):
             self.gameover = True
-            print(self.gameover)
             gameOverScreen = pygame.image.load(
                 'src/images/gameover.png').convert_alpha()
             gameOverScreen = pygame.transform.scale(
