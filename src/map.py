@@ -4,8 +4,9 @@ import constants as con
 import pygame
 
 class Cells:
-    def __init__(self, screen):
+    def __init__(self, screen, stroke = False):
         self.screen = screen
+        self.stroke = stroke
         self.inner = []
         self.matrix = []
         self.grid = []
@@ -50,7 +51,8 @@ class Cells:
             raise ValueError("No cells to display.")
         for elem in self.inner:
             self.screen.fill(elem.color, elem.rect)
-            pygame.draw.rect(self.screen, con.BLACK, elem.rect, 1) # Malha Quadriculada
+            if self.stroke:
+                pygame.draw.rect(self.screen, con.BLACK, elem.rect, 1) # Malha Quadriculada
 
     def printMap(self):
         for y in range(con.TILES_VERTICAL):
