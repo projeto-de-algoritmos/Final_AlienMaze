@@ -4,6 +4,7 @@ import constants as con
 import os
 from map import *
 from player import Player
+from algorithms import aStar
 
 class Game:
 	def __init__(self):
@@ -14,7 +15,7 @@ class Game:
 		self.BG_COLOR = con.BLACK
 		self.keep_looping = True
 		self.cells = Cells(self.surface)
-		self.player = Player(self.surface)
+		self.player = Player(self.surface, self.cells)
 
 	def main(self):
 		while self.keep_looping:
@@ -43,6 +44,9 @@ class Game:
 		self.surface.fill(self.BG_COLOR)
 		self.cells.draw()
 		self.player.draw()
-		# pygame.draw.rect(self.surface, con.PURPLE, self.cells.matrix[16][14])
+
+		# Testando limite
+		pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[19][19])
+
 		# self.surface.fill(con.BLUE, pygame.Rect(17 * con.TILESIZE, 4 * con.TILESIZE, con.TILESIZE, con.TILESIZE))
 		pygame.display.update()

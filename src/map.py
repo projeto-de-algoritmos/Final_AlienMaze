@@ -8,6 +8,7 @@ class Cells:
         self.screen = screen
         self.inner = []
         self.matrix = []
+        self.grid = []
         self.current_cell = None
         self._load_data()
 
@@ -30,23 +31,38 @@ class Cells:
             x += 1
 
         # Colocando na matriz
-        for x in range(con.TILES_HORIZONTAL - 1):
+        for x in range(con.TILES_HORIZONTAL):
             col = []
-            for y in range(con.TILES_VERTICAL - 1):
+            for y in range(con.TILES_VERTICAL):
                 col.append(self.getCell(x, y))
             self.matrix.append(col)
+
+        # Colocando no grid
+        for x in range(con.TILES_HORIZONTAL):
+            row = []
+            for y in range(con.TILES_VERTICAL):
+                row.append(self.getCell(x, y).weight)
+            self.grid.append(row)
+        # print(self.grid)
 
     def draw(self):
         if len(self.inner) == 0:
             raise ValueError("No cells to display.")
         for elem in self.inner:
             self.screen.fill(elem.color, elem.rect)
-            # pygame.draw.rect(self.screen, con.BLACK, elem.rect, 1) # Malha Quadriculada
+            pygame.draw.rect(self.screen, con.BLACK, elem.rect, 1) # Malha Quadriculada
 
     def printMap(self):
-        for y in range(0, con.TILES_VERTICAL - 1):
-            for x in range(0, con.TILES_HORIZONTAL - 1):
+        for y in range(con.TILES_VERTICAL):
+            for x in range(con.TILES_HORIZONTAL):
                 print(self.matrix[x][y].type, '', end='')
+            print('')
+        print('\n\n')
+
+    def printGrid(self):
+        for x in range(con.TILES_HORIZONTAL):
+            for y in range(con.TILES_VERTICAL):
+                print(self.grid[x][y], '', end='')
             print('')
         print('\n\n')
 
@@ -61,17 +77,26 @@ class Cell:
         self.y = int(y)
         self.type = type
 
-        global img
+        global img, wei
         img = {
             'd': con.BROWN
             , 's': con.GRAY
             , 'g': con.GREEN
             , 'p': con.PURPLE
         }
+
+        wei = {
+            'd': 3
+            , 's': 15
+            , 'g': 1
+            , 'p': 5
+        }
         self.color = img[type]
+        self.weight = int(wei[type])
 
         self.rect = pygame.Rect(self.x * con.TILESIZE, self.y * con.TILESIZE, con.TILESIZE, con.TILESIZE)
 
     def setType(self, newType):
         self.type = newType
         self.color = img[newType]
+        self.weight = wei[newType]
