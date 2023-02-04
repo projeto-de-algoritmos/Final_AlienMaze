@@ -117,9 +117,8 @@ def rec(xsorted, ysorted):
             for j in range(i+1, min(i+7, len(in_band))):
                 d = dist(in_band[i], in_band[j])
                 if d < delta:
-                    print(in_band[i], in_band[j])
                     (p1, p2, delta) = (in_band[i], in_band[j], d)
-        return p1, p2, delta
+        return p1, p2
 
 
 def closest(points):

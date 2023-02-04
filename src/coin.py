@@ -1,3 +1,4 @@
+from algorithms import closest
 import constants as con
 import random
 import pygame
@@ -10,6 +11,7 @@ class Coins:
 		self.cells = cells
 		self.player = player
 		self.enemy = enemy
+		self.closest= ()
 
 		self.prohibited.append((self.player.cur_x, self.player.cur_y))
 		self.prohibited.append((self.enemy.x, self.enemy.y))
@@ -24,15 +26,29 @@ class Coins:
 				coin = Coin(x,y,self.cells.matrix[x][y])
 				self.inner.append(coin)
 				self.cells.matrix[x][y].items.append(coin)
+		self.checkClosest()
 
 	def draw(self):
 		for coin in self.inner:
-			pygame.draw.circle(self.surface, con.DARK_RED, coin.cell.rect.center, 8)
+			if(self.closest[0][0] == coin.x and self.closest[0][1] == coin.y) or (self.closest[1][0] == coin.x and self.closest[1][1] == coin.y):
+				pygame.draw.circle(self.surface, con.BLUE, coin.cell.rect.center, 8)
+			else:
+				pygame.draw.circle(self.surface, con.DARK_RED, coin.cell.rect.center, 8)
 
 	def removePickedCoins(self):
 		for coin in self.inner:
 			if coin.cell == None:
 				self.inner.remove(coin)
+	
+	def checkClosest(self):
+		coins =[]
+		for coin in self.inner:
+			print ("Posição " + str (coin.x) + " " + str (coin.y))
+			coins.append((coin.x,coin.y))
+		self.closest = closest(coins)
+		print(self.closest)
+		
+
 
 
 class Coin:
