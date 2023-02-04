@@ -13,7 +13,7 @@ class Coins:
 		self.enemy = enemy
 		self.closest= ()
 
-		self.prohibited.append((self.player.cur_x, self.player.cur_y))
+		self.prohibited.append((self.player.x, self.player.y))
 		self.prohibited.append((self.enemy.x, self.enemy.y))
 		self._generate_coins()
 	

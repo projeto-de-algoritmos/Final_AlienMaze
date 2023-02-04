@@ -72,7 +72,7 @@ class Game:
         pygame.display.update()
 
     def gameOver(self):
-        if (self.enemy.x == self.player.cur_x and self.enemy.y == self.player.cur_y):
+        if (self.enemy.x == self.player.x and self.enemy.y == self.player.y):
             self.gameover = True
             gameOverScreen = pygame.image.load(
                 'src/images/gameover.png').convert_alpha()

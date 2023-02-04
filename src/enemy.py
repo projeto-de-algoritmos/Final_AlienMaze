@@ -28,5 +28,5 @@ class Enemy:
 				self.cur_pos = (self.x, self.y)
 	
 	def aStarDistance(self, end):
-		solution = aStar((self.player.cur_x, self.player.cur_y), end, self.cells)
+		solution = aStar((self.player.x, self.player.y), end, self.cells)
 		return solution
