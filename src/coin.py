@@ -43,10 +43,9 @@ class Coins:
 	def checkClosest(self):
 		coins =[]
 		for coin in self.inner:
-			print ("Posição " + str (coin.x) + " " + str (coin.y))
 			coins.append((coin.x,coin.y))
 		self.closest = closest(coins)
-		print(self.closest)
+
 		
 
 

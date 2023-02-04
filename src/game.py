@@ -18,7 +18,8 @@ class Game:
         self.keep_looping = True
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
-        self.enemy = Enemy(16, 14, self.surface, self.cells, self.player)
+        self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE)
+        self.enemyCoin = Enemy(16, 14, self.surface, self.cells, self.player, con.FUCHIA)
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy)
         self.gameover = False
 
@@ -34,9 +35,7 @@ class Game:
                 self.keep_looping = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    self.keep_looping = False
-                    jogo = Game()
-                    jogo.main()
+                    self.restart()
                 if event.key == pygame.K_ESCAPE:
                     self.keep_looping = False
                 if event.key == pygame.K_RETURN:
@@ -53,6 +52,7 @@ class Game:
 
         if (pygame.time.get_ticks() % 300) == 0:
             self.enemy.moveTowardsPlayer('astar')
+            self.enemyCoin.moveTowardsCoin('astar',self.coins.closest)
         # self.gameOver()
         self.player.getItem()
         self.coins.removePickedCoins()
@@ -64,6 +64,7 @@ class Game:
             self.player.draw()
             self.enemy.draw()
             self.coins.draw()
+            self.enemyCoin.draw()
 
         # Testando limites
         pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[0][0])
@@ -79,3 +80,8 @@ class Game:
             gameOverScreen = pygame.transform.scale(
                 gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
             self.surface.blit(gameOverScreen, (0, 0))
+    
+    def restart(self):
+        self.keep_looping = False
+        jogo = Game()
+        jogo.main()
