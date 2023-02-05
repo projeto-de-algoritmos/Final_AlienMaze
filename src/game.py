@@ -22,6 +22,7 @@ class Game:
         self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin')
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy, self.enemyCoin)
         self.gameover = False
+        self.timer= 10
 
     def main(self):
         while self.keep_looping:
@@ -57,7 +58,7 @@ class Game:
         if time_now > self.enemyCoin.last_movement + self.enemyCoin.speed :
             self.enemyCoin.moveTowardsCoin('astar', self.coins.closest)
 
-        #self.gameOver()
+        self.gameOver()
         self.enemyCoin.getItem()
         self.player.getItem()
         self.coins.removePickedCoins()
@@ -70,7 +71,7 @@ class Game:
             self.enemy.draw()
             self.coins.draw()
             self.enemyCoin.draw()
-            self.drawScore()
+            self.drawHub()
             
 
         # Testando limites
@@ -87,16 +88,45 @@ class Game:
             gameOverScreen = pygame.transform.scale(
                 gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
             self.surface.blit(gameOverScreen, (0, 0))
+        if(self.timer ==0):
+            if(self.player.points < self.enemyCoin.points):
+                self.gameOverScreen()
+            else:
+                self.gameWinScreen()
     
     def restart(self):
         self.keep_looping = False
         jogo = Game()
         jogo.main()
     
-    def drawScore(self):
+    def drawHub(self):        
+        start_ticks=pygame.time.get_ticks() 
+        auxTimer= self.timer-(start_ticks/1000)
+        if(int(auxTimer)== 0): 
+            self.timer=0
         font = pygame.font.Font('freesansbold.ttf', 25)
         scorePlayer = font.render(f'SCORE: {int(self.player.points)}', True, (255, 255, 255))
         scoreEnemy = font.render(f'INIMIGO: {int(self.enemyCoin.points)}', True, (255, 255, 255))
+        timer = font.render(f'Timer: {int(auxTimer)}', True, (255, 255, 255))
+
 
         self.surface.blit(scorePlayer, (10, 10))
         self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH- 150, 10))
+        self.surface.blit(timer, (con.WINDOW_WIDTH/2 - 80, 10))
+    
+    def gameOverScreen(self):
+        self.gameover = True
+        gameOverScreen = pygame.image.load(
+            'src/images/gameover.png').convert_alpha()
+        gameOverScreen = pygame.transform.scale(
+            gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
+        self.surface.blit(gameOverScreen, (0, 0))
+
+    def gameWinScreen(self):
+        self.gameover = True
+        gameOverScreen = pygame.image.load(
+            'src/images/win.png').convert_alpha()
+        gameOverScreen = pygame.transform.scale(
+            gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
+        self.surface.blit(gameOverScreen, (0, 0))
+
