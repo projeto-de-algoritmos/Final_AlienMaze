@@ -28,14 +28,14 @@ class Player:
 	def move(self, event, cells):
 		# print(self.x, self.y)
 		if event.key == pygame.K_w:
-			if cells.getCell(self.x, self.y - 1).type in 'gggg':
+			if cells.getCell(self.x, self.y - 1).type in 'gbgb':
 				self.y -= 1
 		elif event.key == pygame.K_a:
-			if cells.getCell(self.x - 1, self.y).type in 'gggg':
+			if cells.getCell(self.x - 1, self.y).type in 'gbgb':
 				self.x -= 1
 		elif event.key == pygame.K_s:
-			if cells.getCell(self.x, self.y + 1).type in 'gggg':
+			if cells.getCell(self.x, self.y + 1).type in 'gbgb':
 				self.y += 1
 		elif event.key == pygame.K_d:
-			if cells.getCell(self.x + 1, self.y).type in 'gggg':
+			if cells.getCell(self.x + 1, self.y).type in 'gbgb':
 				self.x += 1

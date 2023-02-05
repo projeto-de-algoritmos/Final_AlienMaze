@@ -101,4 +101,4 @@ class Game:
         scoreEnemy = font.render(f'INIMIGO: {int(self.enemyCoin.points)}', True, (255, 255, 255))
 
         self.surface.blit(scorePlayer, (30, con.WINDOW_HEIGHT - 50))
-        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH - 180, con.WINDOW_HEIGHT - 50))
+        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH - 160, con.WINDOW_HEIGHT - 50))
