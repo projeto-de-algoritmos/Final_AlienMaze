@@ -47,11 +47,11 @@ class Game:
                 self.draw()
                 if event.type == pygame.QUIT:
                     self.keep_looping = False
+                    self.do_countdown = False
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_r:
-                        self.restart()
                     if event.key == pygame.K_ESCAPE:
                         self.keep_looping = False
+                        self.do_countdown = False
                 elif event.type == timer_event:
                     counter -= 1
                     timer = font.render(str(counter), True, (255, 255, 255))
