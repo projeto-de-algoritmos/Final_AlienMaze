@@ -22,13 +22,46 @@ class Game:
         self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin')
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy, self.enemyCoin)
         self.gameover = False
-        self.timer= 10
+        self.timer = 10
+        self.do_countdown = True
 
     def main(self):
+        self.countdown(5)   
         while self.keep_looping:
             self.draw()
             self.events()
             self.update()
+
+    def countdown(self, seconds):
+        counter = seconds
+
+        font = pygame.font.Font('freesansbold.ttf', 150)
+        timer = font.render(f'{seconds}', True, (255, 255, 255))
+        
+        timer_event = pygame.USEREVENT+1
+        pygame.time.set_timer(timer_event, 1000)
+
+        while self.do_countdown:
+            self.clock.tick(60)
+            for event in pygame.event.get():
+                self.draw()
+                if event.type == pygame.QUIT:
+                    self.keep_looping = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:
+                        self.restart()
+                    if event.key == pygame.K_ESCAPE:
+                        self.keep_looping = False
+                elif event.type == timer_event:
+                    counter -= 1
+                    timer = font.render(str(counter), True, (255, 255, 255))
+                    if counter == 0:
+                        pygame.time.set_timer(timer_event, 0)
+                        self.do_countdown = False
+
+            text_rect = timer.get_rect(center = self.surface.get_rect().center)
+            self.surface.blit(timer, text_rect)
+            pygame.display.flip()
 
     def events(self):
         for event in pygame.event.get():
