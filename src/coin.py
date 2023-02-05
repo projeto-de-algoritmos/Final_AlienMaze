@@ -35,13 +35,14 @@ class Coins:
 
 	def draw(self):
 		color = con.BLUE
-		for coin in self.inner:
-			if len(self.inner) > 2:
-				if(self.closest[0][0] == coin.x and self.closest[0][1] == coin.y) or (self.closest[1][0] == coin.x and self.closest[1][1] == coin.y):
-					color = con.BLUE
-				else:
-					color = con.DARK_RED
-			pygame.draw.circle(self.surface, color, coin.cell.rect.center, 8)
+		if len(self.inner) > 0:
+			for coin in self.inner:
+				if len(self.inner) > 2:
+					if(self.closest[0][0] == coin.x and self.closest[0][1] == coin.y) or (self.closest[1][0] == coin.x and self.closest[1][1] == coin.y):
+						color = con.BLUE
+					else:
+						color = con.DARK_RED
+				pygame.draw.circle(self.surface, color, coin.cell.rect.center, 8)
 
 	def removePickedCoins(self):
 		for coin in self.inner:

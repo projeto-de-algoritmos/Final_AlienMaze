@@ -37,13 +37,11 @@ class Enemy:
 
 	def getItem(self):
 		items = self.cells.matrix[self.x][self.y].items
-		if len(items):
-			i = 0
+		if len(items) > 0:
 			for item in items:
 				if isinstance(item, Coin):
 					item.cell = None
-					items = items[:i] + items[i+1:]
-				i += 1
+					items.remove(item)
 			self.points += 1
 	
 	def moveTowardsPlayer(self, algorithmType):

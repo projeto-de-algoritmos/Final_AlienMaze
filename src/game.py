@@ -14,7 +14,7 @@ class Game:
         pygame.display.set_caption(con.TITLE)
         self.surface = pygame.display.set_mode(
             (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
-        self.BG_COLOR = con.BLACK
+        self.BG_COLOR = con.BROWN
         self.keep_looping = True
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
@@ -61,6 +61,10 @@ class Game:
         self.gameOver()
         self.enemyCoin.getItem()
         self.player.getItem()
+        if len(self.cells.matrix[self.enemyCoin.x][self.enemyCoin.y].items):
+            self.enemyCoin.getItem()
+        if len(self.cells.matrix[self.player.x][self.player.y].items):
+         self.player.getItem()
         self.coins.removePickedCoins()
 
     def draw(self):
@@ -110,8 +114,8 @@ class Game:
         timer = font.render(f'Timer: {int(auxTimer)}', True, (255, 255, 255))
 
 
-        self.surface.blit(scorePlayer, (10, 10))
-        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH- 150, 10))
+        self.surface.blit(scorePlayer, (30, con.WINDOW_HEIGHT - 50))
+        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH - 160, con.WINDOW_HEIGHT - 50))
         self.surface.blit(timer, (con.WINDOW_WIDTH/2 - 80, 10))
     
     def gameOverScreen(self):
@@ -130,3 +134,4 @@ class Game:
             gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
         self.surface.blit(gameOverScreen, (0, 0))
 
+      

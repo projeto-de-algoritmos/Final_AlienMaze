@@ -85,14 +85,14 @@ class Cell:
             'd': con.BROWN
             , 's': con.GRAY
             , 'g': con.GREEN
-            , 'p': con.PURPLE
+            , 'b': con.TEAL
         }
 
         wei = {
             'd': 3
             , 's': 15
             , 'g': 1
-            , 'p': 5
+            , 'b': 5
         }
         self.color = img[type]
         self.weight = int(wei[type])

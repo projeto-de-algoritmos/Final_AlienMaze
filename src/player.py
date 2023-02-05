@@ -17,27 +17,25 @@ class Player:
 
 	def getItem(self):
 		items = self.cells.matrix[self.x][self.y].items
-		if len(items):
-			i = 0
+		if len(items) > 0:
 			for item in items:
 				if isinstance(item, Coin):
 					item.cell = None
-					items = items[:i] + items[i+1:]
-				i += 1
+					items.remove(item)
 			self.points += 1
 
 
 	def move(self, event, cells):
 		# print(self.x, self.y)
 		if event.key == pygame.K_w:
-			if cells.getCell(self.x, self.y - 1).type in 'gs':
+			if cells.getCell(self.x, self.y - 1).type in 'gbgb':
 				self.y -= 1
 		elif event.key == pygame.K_a:
-			if cells.getCell(self.x - 1, self.y).type in 'gs':
+			if cells.getCell(self.x - 1, self.y).type in 'gbgb':
 				self.x -= 1
 		elif event.key == pygame.K_s:
-			if cells.getCell(self.x, self.y + 1).type in 'gs':
+			if cells.getCell(self.x, self.y + 1).type in 'gbgb':
 				self.y += 1
 		elif event.key == pygame.K_d:
-			if cells.getCell(self.x + 1, self.y).type in 'gs':
+			if cells.getCell(self.x + 1, self.y).type in 'gbgb':
 				self.x += 1
