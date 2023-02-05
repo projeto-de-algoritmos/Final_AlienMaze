@@ -57,7 +57,7 @@ class Game:
         if time_now > self.enemyCoin.last_movement + self.enemyCoin.speed :
             self.enemyCoin.moveTowardsCoin('astar', self.coins.closest)
 
-        # self.gameOver()
+        self.gameOver()
         self.enemyCoin.getItem()
         self.player.getItem()
         self.coins.removePickedCoins()

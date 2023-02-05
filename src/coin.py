@@ -26,6 +26,9 @@ class Coins:
 				coin = Coin(x,y,self.cells.matrix[x][y])
 				self.inner.append(coin)
 				self.cells.matrix[x][y].items.append(coin)
+				# Pesando as células das moedas para os inimigos não pegarem por acidente no A*
+				self.cells.grid[x][y] = 200
+				self.cells.matrix[x][y].weight = 200
 		self.checkClosest()
 
 	def draw(self):
