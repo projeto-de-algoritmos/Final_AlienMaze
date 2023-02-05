@@ -4,7 +4,7 @@ import constants as con
 from algorithms import aStar, manhattanDistance
 
 class Enemy:
-	def __init__(self, x, y, surface, cells, player, color):
+	def __init__(self, x, y, surface, cells, player, color, type):
 		self.x = x
 		self.y = y
 		self.cur_pos = (x,y)
@@ -17,14 +17,23 @@ class Enemy:
 		self.points = 0
 		self.speed = 300
 		self.last_movement = pygame.time.get_ticks()
+		self.type = type
         
 	def draw(self):
-		# Ponto para testar o A*
+		# Inimigo
 		pygame.draw.rect(self.surface, self.color, self.cells.matrix[self.x][self.y])
+
+		# Caminho do player até o inimigo
 		path = list(reversed(self.aStarDistance(self.cur_pos,'player')))
-		if len(path) > 1 and self.showPath:
+		if len(path) > 1 and self.showPath and self.type == 'player':
 			for cell in path:
 				pygame.draw.circle(self.surface, con.ORANGE, cell.rect.center, 5)
+
+		# Caminho do inimigo até a moeda
+		path = list(reversed(self.aStarDistance(self.cur_pos,'coin')))
+		if len(path) > 1 and self.showPath and self.type == 'coin':
+			for cell in path:
+				pygame.draw.circle(self.surface, con.SILVER, cell.rect.center, 5)
 
 	def getItem(self):
 		items = self.cells.matrix[self.x][self.y].items

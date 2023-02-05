@@ -18,8 +18,8 @@ class Game:
         self.keep_looping = True
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
-        self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE)
-        self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA)
+        self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE, 'player')
+        self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin')
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy)
         self.gameover = False
 
@@ -44,6 +44,7 @@ class Game:
                     self.cells.stroke = not self.cells.stroke
                 if event.key == pygame.K_c:
                     self.enemy.showPath = not self.enemy.showPath
+                    self.enemyCoin.showPath = not self.enemyCoin.showPath
                 else:
                     # self.cells.printMap()
                     self.player.move(event, self.cells)
