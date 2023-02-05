@@ -57,9 +57,11 @@ class Game:
         if time_now > self.enemyCoin.last_movement + self.enemyCoin.speed :
             self.enemyCoin.moveTowardsCoin('astar', self.coins.closest)
 
-        #self.gameOver()
-        self.enemyCoin.getItem()
-        self.player.getItem()
+        self.gameOver()
+        if len(self.cells.matrix[self.enemyCoin.x][self.enemyCoin.y].items):
+            self.enemyCoin.getItem()
+        if len(self.cells.matrix[self.player.x][self.player.y].items):
+         self.player.getItem()
         self.coins.removePickedCoins()
 
     def draw(self):
