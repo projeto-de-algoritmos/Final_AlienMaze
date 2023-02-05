@@ -22,15 +22,37 @@ class Game:
         self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin')
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy, self.enemyCoin)
         self.gameover = False
-        self.timer = 10
         self.do_countdown = True
+        self.start =False
 
     def main(self):
-        self.countdown(5)   
-        while self.keep_looping:
-            self.draw()
-            self.events()
-            self.update()
+      
+        self.menu()
+        if self.start:
+             self.countdown(5)   
+             while self.keep_looping:
+                self.draw()
+                self.events()
+                self.update()
+    def menu(self):
+        menuScreen = pygame.image.load(
+        'src/images/welcome.png').convert_alpha()
+        menuScreen = pygame.transform.scale(
+        menuScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
+        self.surface.blit(menuScreen, (0, 0))
+        pygame.display.flip()
+
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                key = pygame.key.get_pressed()
+                if key[pygame.K_RETURN]:
+                    waiting = False
+                    self.start=True
+       
+
 
     def countdown(self, seconds):
         counter = seconds
@@ -109,23 +131,18 @@ class Game:
             self.coins.draw()
             self.enemyCoin.draw()
             self.drawHub()
-            
-
-        # Testando limites
-        # pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[0][0])
-        # pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[19][19])
 
         pygame.display.update()
 
     def gameOver(self):
-        if (self.enemy.x == self.player.x and self.enemy.y == self.player.y):
+        if (self.enemy.x == self.player.x and self.enemy.y == self.player.y and self.gameover == False):
             self.gameover = True
             gameOverScreen = pygame.image.load(
                 'src/images/gameover.png').convert_alpha()
             gameOverScreen = pygame.transform.scale(
                 gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
             self.surface.blit(gameOverScreen, (0, 0))
-        if(self.timer ==0):
+        if(len(self.coins.inner) ==0):
             if(self.player.points < self.enemyCoin.points):
                 self.gameOverScreen()
             else:
@@ -137,19 +154,12 @@ class Game:
         jogo.main()
     
     def drawHub(self):        
-        start_ticks=pygame.time.get_ticks() 
-        auxTimer= self.timer-(start_ticks/1000)
-        if(int(auxTimer)== 0): 
-            self.timer=0
         font = pygame.font.Font('freesansbold.ttf', 25)
         scorePlayer = font.render(f'SCORE: {int(self.player.points)}', True, (255, 255, 255))
         scoreEnemy = font.render(f'INIMIGO: {int(self.enemyCoin.points)}', True, (255, 255, 255))
-        timer = font.render(f'Timer: {int(auxTimer)}', True, (255, 255, 255))
-
 
         self.surface.blit(scorePlayer, (30, con.WINDOW_HEIGHT - 50))
         self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH - 160, con.WINDOW_HEIGHT - 50))
-        self.surface.blit(timer, (con.WINDOW_WIDTH/2 - 80, 10))
     
     def gameOverScreen(self):
         self.gameover = True
