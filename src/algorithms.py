@@ -108,7 +108,14 @@ def rec(xsorted, ysorted):
 		# Encontrar os par mais próximo na parte direita(delta-right)
         (p1_right, p2_right, delta_right) = rec(xsorted_right, ysorted_right)
 		# Encontrar a menor distância possível entre pontos no plano dividido(delta)
-        (p1, p2, delta) = (p1_left, p2_left, delta_left) if (delta_left < delta_right) else (p1_right, p2_right, delta_right)
+
+
+        if(delta_left ==0.0 or delta_left ==1):
+             (p1, p2, delta) = (p1_right, p2_right, delta_right)
+        elif(delta_right ==0.0 or delta_right ==1):
+            (p1, p2, delta) = (p1_left, p2_left, delta_left)
+        else:
+            (p1, p2, delta) = (p1_left, p2_left, delta_left) if (delta_left < delta_right)  else (p1_right, p2_right, delta_right)
         # Encontrar pontos que podem estar em diferentes planos, na faixa da menor distância
         in_band = [point for point in ysorted if midpoint[0] -
                    delta < point[0] < midpoint[0]+delta]
@@ -116,9 +123,11 @@ def rec(xsorted, ysorted):
         for i in range(len(in_band)):
             for j in range(i+1, min(i+7, len(in_band))):
                 d = dist(in_band[i], in_band[j])
-                if d < delta:
+                if d < delta and d>0.0:
                     (p1, p2, delta) = (in_band[i], in_band[j], d)
-        return p1, p2
+
+       
+        return p1, p2, delta
 
 
 def closest(points):
