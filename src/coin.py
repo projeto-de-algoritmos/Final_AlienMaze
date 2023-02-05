@@ -4,17 +4,19 @@ import random
 import pygame
 
 class Coins:
-	def __init__(self, surface, cells, player, enemy):
+	def __init__(self, surface, cells, player, enemy,enemyCoins):
 		self.inner = []
 		self.prohibited = []
 		self.surface = surface
 		self.cells = cells
 		self.player = player
 		self.enemy = enemy
+		self.enemyCoins = enemyCoins
 		self.closest = ()
 
 		self.prohibited.append((self.player.x, self.player.y))
 		self.prohibited.append((self.enemy.x, self.enemy.y))
+		self.prohibited.append((self.enemyCoins.x, self.enemyCoins.y))
 		self._generate_coins()
 	
 	def _generate_coins(self):
