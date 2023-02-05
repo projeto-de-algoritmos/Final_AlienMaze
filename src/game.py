@@ -20,7 +20,7 @@ class Game:
         self.player = Player(self.surface, self.cells)
         self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE, 'player')
         self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin')
-        self.coins = Coins(self.surface, self.cells, self.player, self.enemy)
+        self.coins = Coins(self.surface, self.cells, self.player, self.enemy, self.enemyCoin)
         self.gameover = False
 
     def main(self):
@@ -57,7 +57,7 @@ class Game:
         if time_now > self.enemyCoin.last_movement + self.enemyCoin.speed :
             self.enemyCoin.moveTowardsCoin('astar', self.coins.closest)
 
-        self.gameOver()
+        #self.gameOver()
         self.enemyCoin.getItem()
         self.player.getItem()
         self.coins.removePickedCoins()
@@ -70,10 +70,12 @@ class Game:
             self.enemy.draw()
             self.coins.draw()
             self.enemyCoin.draw()
+            self.drawScore()
+            
 
         # Testando limites
-        pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[0][0])
-        pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[19][19])
+        # pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[0][0])
+        # pygame.draw.rect(self.surface, con.YELLOW, self.cells.matrix[19][19])
 
         pygame.display.update()
 
@@ -90,3 +92,11 @@ class Game:
         self.keep_looping = False
         jogo = Game()
         jogo.main()
+    
+    def drawScore(self):
+        font = pygame.font.Font('freesansbold.ttf', 25)
+        scorePlayer = font.render(f'SCORE: {int(self.player.points)}', True, (255, 255, 255))
+        scoreEnemy = font.render(f'INIMIGO: {int(self.enemyCoin.points)}', True, (255, 255, 255))
+
+        self.surface.blit(scorePlayer, (10, 10))
+        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH- 150, 10))
