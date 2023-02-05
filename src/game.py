@@ -19,7 +19,7 @@ class Game:
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
         self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE)
-        self.enemyCoin = Enemy(16, 14, self.surface, self.cells, self.player, con.FUCHIA)
+        self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA)
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy)
         self.gameover = False
 
@@ -49,11 +49,15 @@ class Game:
                     self.player.move(event, self.cells)
 
     def update(self):
+        time_now = pygame.time.get_ticks()
 
-        if (pygame.time.get_ticks() % 300) == 0:
+        if time_now > self.enemy.last_movement + self.enemy.speed :
             self.enemy.moveTowardsPlayer('astar')
-            self.enemyCoin.moveTowardsCoin('astar',self.coins.closest)
+        if time_now > self.enemyCoin.last_movement + self.enemyCoin.speed :
+            self.enemyCoin.moveTowardsCoin('astar', self.coins.closest)
+
         # self.gameOver()
+        self.enemyCoin.getItem()
         self.player.getItem()
         self.coins.removePickedCoins()
 

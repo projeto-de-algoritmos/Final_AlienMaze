@@ -11,7 +11,7 @@ class Coins:
 		self.cells = cells
 		self.player = player
 		self.enemy = enemy
-		self.closest= ()
+		self.closest = ()
 
 		self.prohibited.append((self.player.x, self.player.y))
 		self.prohibited.append((self.enemy.x, self.enemy.y))
@@ -29,22 +29,29 @@ class Coins:
 		self.checkClosest()
 
 	def draw(self):
+		color = con.BLUE
 		for coin in self.inner:
-			if(self.closest[0][0] == coin.x and self.closest[0][1] == coin.y) or (self.closest[1][0] == coin.x and self.closest[1][1] == coin.y):
-				pygame.draw.circle(self.surface, con.BLUE, coin.cell.rect.center, 8)
-			else:
-				pygame.draw.circle(self.surface, con.DARK_RED, coin.cell.rect.center, 8)
+			if len(self.inner) > 2:
+				if(self.closest[0][0] == coin.x and self.closest[0][1] == coin.y) or (self.closest[1][0] == coin.x and self.closest[1][1] == coin.y):
+					color = con.BLUE
+				else:
+					color = con.DARK_RED
+			pygame.draw.circle(self.surface, color, coin.cell.rect.center, 8)
 
 	def removePickedCoins(self):
 		for coin in self.inner:
 			if coin.cell == None:
 				self.inner.remove(coin)
+		self.checkClosest()
 	
 	def checkClosest(self):
-		coins =[]
+		coins = []
 		for coin in self.inner:
 			coins.append((coin.x,coin.y))
-		self.closest = closest(coins)
+		if len(coins) > 1:
+			self.closest = closest(coins)
+		else:
+			self.closest = coins
 
 		
 
