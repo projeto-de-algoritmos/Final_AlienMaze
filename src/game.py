@@ -14,7 +14,7 @@ class Game:
         pygame.display.set_caption(con.TITLE)
         self.surface = pygame.display.set_mode(
             (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
-        self.BG_COLOR = con.BLACK
+        self.BG_COLOR = con.BROWN
         self.keep_looping = True
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
@@ -98,5 +98,5 @@ class Game:
         scorePlayer = font.render(f'SCORE: {int(self.player.points)}', True, (255, 255, 255))
         scoreEnemy = font.render(f'INIMIGO: {int(self.enemyCoin.points)}', True, (255, 255, 255))
 
-        self.surface.blit(scorePlayer, (10, 10))
-        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH- 150, 10))
+        self.surface.blit(scorePlayer, (30, con.WINDOW_HEIGHT - 50))
+        self.surface.blit(scoreEnemy, (con.WINDOW_WIDTH - 180, con.WINDOW_HEIGHT - 50))
