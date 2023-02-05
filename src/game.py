@@ -23,10 +23,9 @@ class Game:
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy, self.enemyCoin)
         self.gameover = False
         self.do_countdown = True
-        self.start =False
+        self.start = False
 
     def main(self):
-      
         self.menu()
         if self.start:
              self.countdown(5)   
@@ -34,6 +33,7 @@ class Game:
                 self.draw()
                 self.events()
                 self.update()
+                
     def menu(self):
         menuScreen = pygame.image.load(
         'src/images/welcome.png').convert_alpha()
@@ -51,8 +51,8 @@ class Game:
                 if key[pygame.K_RETURN]:
                     waiting = False
                     self.start=True
-       
-
+                if key[pygame.K_ESCAPE]:
+                    exit()
 
     def countdown(self, seconds):
         counter = seconds
@@ -114,12 +114,10 @@ class Game:
             self.enemyCoin.moveTowardsCoin('astar', self.coins.closest)
 
         self.gameOver()
-        self.enemyCoin.getItem()
-        self.player.getItem()
         if len(self.cells.matrix[self.enemyCoin.x][self.enemyCoin.y].items):
-            self.enemyCoin.getItem()
+            self.enemyCoin.getItem(self.gameover)
         if len(self.cells.matrix[self.player.x][self.player.y].items):
-         self.player.getItem()
+         self.player.getItem(self.gameover)
         self.coins.removePickedCoins()
 
     def draw(self):

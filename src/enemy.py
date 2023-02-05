@@ -35,7 +35,7 @@ class Enemy:
 			for cell in path:
 				pygame.draw.circle(self.surface, con.SILVER, cell.rect.center, 5)
 
-	def getItem(self):
+	def getItem(self, gameover):
 		items = self.cells.matrix[self.x][self.y].items
 		if len(items) > 0:
 			for item in items:
@@ -43,6 +43,7 @@ class Enemy:
 					item.cell = None
 					items.remove(item)
 			self.points += 1
+			pygame.mixer.Sound.play(pygame.mixer.Sound("src/sounds/coin.mp3")).set_volume(0.5) if not gameover else 0
 	
 	def moveTowardsPlayer(self, algorithmType):
 		if algorithmType == 'astar':
