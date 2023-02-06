@@ -50,6 +50,8 @@ Você também pode apertar **M** para ver o mapa com uma malha quadriculada caso
 
 (O vídeo em qualidade cheia pode ser baixado clicando [aqui](https://github.com/projeto-de-algoritmos/Final_CorreBerg/raw/master/apresentacao.mp4))
 
+https://user-images.githubusercontent.com/54643355/216994945-9b0c830e-378d-4d2e-b602-b08f419113af.mp4
+
 
 ## Instalação 
 **Linguagem**: Python<br>
