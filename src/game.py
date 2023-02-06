@@ -1,7 +1,6 @@
 from map import Cells
 import pygame
 import constants as con
-import os
 from map import *
 from player import Player
 from enemy import Enemy
@@ -18,8 +17,8 @@ class Game:
         self.keep_looping = True
         self.cells = Cells(self.surface)
         self.player = Player(self.surface, self.cells)
-        self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE, 'player')
-        self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin')
+        self.enemy = Enemy(16, 14, self.surface, self.cells, self.player,con.PURPLE, 'player', 300)
+        self.enemyCoin = Enemy(15, 1, self.surface, self.cells, self.player, con.FUCHIA, 'coin', 300)
         self.coins = Coins(self.surface, self.cells, self.player, self.enemy, self.enemyCoin)
         self.gameover = False
         self.do_countdown = True
@@ -74,6 +73,11 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         self.keep_looping = False
                         self.do_countdown = False
+                    if event.key == pygame.K_m:
+                        self.cells.stroke = not self.cells.stroke
+                    if event.key == pygame.K_c:
+                        self.enemy.showPath = not self.enemy.showPath
+                        self.enemyCoin.showPath = not self.enemyCoin.showPath
                 elif event.type == timer_event:
                     counter -= 1
                     timer = font.render(str(counter), True, (255, 255, 255))
@@ -94,15 +98,12 @@ class Game:
                     self.restart()
                 if event.key == pygame.K_ESCAPE:
                     self.keep_looping = False
-                if event.key == pygame.K_RETURN:
-                    self.cells.matrix[16][14].setType('p')
                 if event.key == pygame.K_m:
                     self.cells.stroke = not self.cells.stroke
                 if event.key == pygame.K_c:
                     self.enemy.showPath = not self.enemy.showPath
                     self.enemyCoin.showPath = not self.enemyCoin.showPath
                 else:
-                    # self.cells.printMap()
                     self.player.move(event, self.cells)
 
     def update(self):
@@ -117,7 +118,7 @@ class Game:
         if len(self.cells.matrix[self.enemyCoin.x][self.enemyCoin.y].items):
             self.enemyCoin.getItem(self.gameover)
         if len(self.cells.matrix[self.player.x][self.player.y].items):
-         self.player.getItem(self.gameover)
+         self.player.getItem(self.gameover, self.enemyCoin)
         self.coins.removePickedCoins()
 
     def draw(self):
@@ -140,7 +141,7 @@ class Game:
             gameOverScreen = pygame.transform.scale(
                 gameOverScreen, (con.WINDOW_WIDTH, con.WINDOW_HEIGHT))
             self.surface.blit(gameOverScreen, (0, 0))
-        if(len(self.coins.inner) ==0):
+        if(len(self.coins.inner) == 0):
             if(self.player.points < self.enemyCoin.points):
                 self.gameOverScreen()
             else:

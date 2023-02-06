@@ -62,7 +62,7 @@ def aStar(start, end, cells):
 		reversePath.append(cur_node)
 		reverseAnswer.append(cells.matrix[cur_node[0]][cur_node[1]])
 
-	path = list(reversed(reversePath))
+	# path = list(reversed(reversePath))
 	# print(path)
 
 	answer = list(reversed(reverseAnswer))

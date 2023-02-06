@@ -17,8 +17,6 @@ class Cells:
         xlsx = ExcelFile("./src/map.xlsx")
         global cells
         cells = xlsx.parse(xlsx.sheet_names[0]).to_dict()
-        # for c in cells:
-        #     print(cells[c])
 
         x, y, id = 0, 0, 0
         self.inner = []
@@ -44,7 +42,6 @@ class Cells:
             for y in range(con.TILES_VERTICAL):
                 row.append(self.getCell(x, y).weight)
             self.grid.append(row)
-        # print(self.grid)
 
     def draw(self):
         if len(self.inner) == 0:

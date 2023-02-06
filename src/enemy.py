@@ -4,7 +4,7 @@ import constants as con
 from algorithms import aStar, manhattanDistance
 
 class Enemy:
-	def __init__(self, x, y, surface, cells, player, color, type):
+	def __init__(self, x, y, surface, cells, player, color, type, speed):
 		self.x = x
 		self.y = y
 		self.cur_pos = (x,y)
@@ -15,7 +15,7 @@ class Enemy:
 		self.showPath = False
 		self.color = color
 		self.points = 0
-		self.speed = 300
+		self.speed = speed
 		self.last_movement = pygame.time.get_ticks()
 		self.type = type
         
@@ -44,6 +44,7 @@ class Enemy:
 					items.remove(item)
 			self.points += 1
 			pygame.mixer.Sound.play(pygame.mixer.Sound("src/sounds/coin.mp3")).set_volume(0.5) if not gameover else 0
+			self.updateSpeed(10)
 	
 	def moveTowardsPlayer(self, algorithmType):
 		if algorithmType == 'astar':
@@ -51,7 +52,7 @@ class Enemy:
 			if len(path) > 1:
 				self.x, self.y = path[1].x, path[1].y
 				self.cur_pos = (self.x, self.y)
-		self.last_movement = pygame.time.get_ticks()
+			self.last_movement = pygame.time.get_ticks()
 	
 	def aStarDistance(self, end, objective):
 		if objective == 'player':
@@ -76,3 +77,6 @@ class Enemy:
 				self.x, self.y = path[1].x, path[1].y
 				self.cur_pos = (self.x, self.y)
 			self.last_movement = pygame.time.get_ticks()
+
+	def updateSpeed(self, decrease):
+		self.speed = self.speed - decrease
