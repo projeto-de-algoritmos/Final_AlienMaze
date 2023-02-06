@@ -19,7 +19,7 @@ Para iniciar o jogo, aperte **ENTER/RETURN** para começar. Depois disso, um cou
 Para recomeçar, basta apertar **R**.
 
 ### :bulb: BÔNUS!!
-Você pode apertar **C** para visualizar o caminho que o Bob (que te persegue) e o Bill (que persegue as moedas) vão fazer usando o A-Star.
+Você pode apertar **C** para visualizar o caminho que o Bill (que te persegue) e o Bob (que persegue as moedas) vão fazer usando o A-Star.
 
 Você também pode apertar **M** para ver o mapa com uma malha quadriculada caso ache melhor a visualização.
 
@@ -48,6 +48,7 @@ Você também pode apertar **M** para ver o mapa com uma malha quadriculada caso
 
 ## Vídeo de Apresentação
 
+(O vídeo em qualidade cheia pode ser baixado clicando aqui)
 
 
 ## Instalação 
